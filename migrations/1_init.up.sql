@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS users
+(
+    id        SERIAL NOT NULL UNIQUE PRIMARY KEY,
+    email     TEXT NOT NULL UNIQUE,
+    pass_hash TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_email ON users (email);
+
+CREATE TABLE IF NOT EXISTS items
+(
+    id SERIAL NOT NULL UNIQUE PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
+    user_id BIGINT NOT NULL,
+    CONSTRAINT users_items_fk FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);

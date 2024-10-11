@@ -1,0 +1,33 @@
+services:
+  todo-app:
+    container_name: todo-app
+    build: ./
+    command: ./todo-app
+    ports:
+      - "8083:8083"
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+    environment:
+      - CONFIG_PATH=./config/local_compose.yaml
+      - DB_PASSWORD=qwerty
+      - MY_SECRET=Darm
+   
+
+  db: 
+    container_name: todo-app-db
+    image: postgres:latest
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=qwerty
+    ports:
+      - 5436:5432

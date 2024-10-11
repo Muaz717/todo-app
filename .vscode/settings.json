@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5436,
+            "askForPassword": true,
+            "driver": "PostgreSQL",
+            "name": "todo-docker",
+            "database": "postgres",
+            "username": "postgres"
+        }
+    ]
+}

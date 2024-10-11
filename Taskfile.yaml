@@ -1,0 +1,35 @@
+version: "3"
+
+tasks:
+  build:
+    desc: "Build todo-app into bin file"
+    cmds:
+      - go build -o ./.bin/todo-app cmd/todo-app/main.go
+  run:
+    desc: "Run runs todo-app"
+    deps:
+      - build
+    cmds:
+      - ./.bin/todo-app
+  
+  build-image:
+    desc: "Builds image from Dockerfile for todo-app without db"
+    cmds:
+      - docker build -t todo-app .
+  build-compose:
+    desc: "Builds image from docker-compose for todo-app"
+    cmds:
+      - docker-compose build todo-app
+  start-container:
+    desc: "Starts todo-app in container"
+    cmds:
+      - docker-compose up todo-app
+
+  migrations:
+    desc: "Migrations for db"
+    cmds:
+      - go run ./cmd/migrator --migrations-path=./migrations --database-url=postgres:qwerty@localhost:5436/postgres
+  test_migrations:
+    desc: "Test migrations for db"
+    cmds:
+      - go run ./cmd/migrator --migrations-path=./migrations --database-url=postgres:qwerty@localhost:5436/postgres --migrations-table=migrations_test
