@@ -7,8 +7,6 @@ tasks:
       - go build -o ./.bin/todo-app cmd/todo-app/main.go
   run:
     desc: "Run runs todo-app"
-    deps:
-      - build
     cmds:
       - ./.bin/todo-app
   
